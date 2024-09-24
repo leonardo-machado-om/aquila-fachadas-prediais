@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Áquila Fachadas Prediais</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;			
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0 auto;
+            width: 1200px;
+            max-width: 100%;
+            gap: 30px;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+        }
+
+        .left-content, .right-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            max-width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .left-content:hover, .right-content:hover {
+            transform: translateY(-5px);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: #d9534f;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #d9534f;
+            font-size: 22px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .linktree {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .linktree a {
+            color: white;
+            background-color: #d9534f;
+            font-size: 18px;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .linktree a:hover {
+            background-color: #c9302c;
+            transform: scale(1.05);
+        }
+
+        .qr-code {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+            border: 2px solid #d9534f;
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+        .right-content form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .right-content form input,
+        .right-content form textarea {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .right-content form input:focus,
+        .right-content form textarea:focus {
+            border-color: #d9534f;
+        }
+
+        .right-content form button {
+            background-color: #d9534f;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .right-content form button:hover {
+            background-color: #c9302c;
+            transform: translateY(-3px);
+        }
+
+        textarea { 
+            resize: vertical; 
+            min-height: 135px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-content">
+            <img src="logo-construcao-civil.jpg" alt="Aquila Logo">
+            
+            <div class="linktree">
+                <a href="https://linktr.ee/aquilafachadas" target="_blank">Acesse nosso Linktree</a>
+            </div>
+
+            <div class="qr-code">
+                <img src="qrcode-construcao-civil.jpg" alt="QR Code">
+            </div>
+        </div>
+
+        <div class="right-content">
+            <h2>Solicite seu orçamento</h2>
+            <form id="emailForm" onsubmit="sendEmail(event)">
+                <input type="email" id="user_email" placeholder="Seu E-mail" required>
+                <input type="tel" id="telefone" placeholder="Seu Telefone (Opcional)" maxlength="15">
+                <input type="text" id="proposta" placeholder="Orçamento" required>
+                <textarea id="mensagem" rows="5" placeholder="Sua Mensagem" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Função para aplicar máscara de telefone
+        document.getElementById('telefone').addEventListener('input', function (e) {
+			if (e.inputType === 'deleteContentBackward') {
+				return;
+			}
+            let input = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+            			
+            // Limita o número de dígitos a no máximo 11 (padrão de telefone brasileiro)
+            if (input.length > 11) {
+                input = input.substring(0, 11);
+            }
+
+            // Armazena a posição do cursor antes da formatação
+            const cursorPosition = e.target.selectionStart;
+
+            // Aplica formato dependendo do número de dígitos
+            let formattedInput = '';
+            if (input.length <= 10) {
+                formattedInput = input.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+            } else {
+                formattedInput = input.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+            }
+
+            e.target.value = formattedInput; // Atualiza o campo com a máscara
+
+            // Restaura a posição do cursor
+            const newCursorPosition = cursorPosition + (formattedInput.length - input.length);
+            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+        });
+
+        function sendEmail(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const userEmail = document.getElementById('user_email').value;
+            const telefone = document.getElementById('telefone').value;
+            const proposta = document.getElementById('proposta').value;
+            const mensagem = document.getElementById('mensagem').value;
+
+            const subject = encodeURIComponent("Nova Proposta");
+            let body = `E-mail: ${userEmail}\nProposta: ${proposta}\nMensagem: ${mensagem}`;
+            if (telefone) {
+                body += `\nTelefone: ${telefone}`;
+            }
+
+            const mailtoLink = `mailto:orcamento@aquilafachadasprediais.com.br?subject=${subject}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink; // Abre o cliente de e-mail do usuário
+        }
+    </script>
+
+</body>
+</html>
