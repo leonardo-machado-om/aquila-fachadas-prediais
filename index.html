@@ -164,7 +164,6 @@
             <form id="emailForm" onsubmit="sendEmail(event)">
                 <input type="email" id="user_email" placeholder="Seu E-mail" required>
                 <input type="tel" id="telefone" placeholder="Seu Telefone (Opcional)" maxlength="15">
-                <input type="text" id="proposta" placeholder="Orçamento" required>
                 <textarea id="mensagem" rows="5" placeholder="Sua Mensagem" required></textarea>
                 <button type="submit">Enviar</button>
             </form>
@@ -207,11 +206,10 @@
 
             const userEmail = document.getElementById('user_email').value;
             const telefone = document.getElementById('telefone').value;
-            const proposta = document.getElementById('proposta').value;
             const mensagem = document.getElementById('mensagem').value;
 
-            const subject = encodeURIComponent("Nova Proposta");
-            let body = `E-mail: ${userEmail}\nProposta: ${proposta}\nMensagem: ${mensagem}`;
+            const subject = encodeURIComponent("Novo Orçamento");
+            let body = `E-mail: ${userEmail}\nMensagem: ${mensagem}`;
             if (telefone) {
                 body += `\nTelefone: ${telefone}`;
             }
